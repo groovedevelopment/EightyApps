@@ -1,7 +1,7 @@
 var EightyApp = function() {
   	// processDocument returns scraped data
     this.processDocument = function(html, url, headers, status, cheerio) {
-        $ = cheerio;
+        var $ = cheerio;
         var app = this;
         var $html = app.parseHtml(html, cheerio);
         var object = new Object();
@@ -31,11 +31,7 @@ var EightyApp = function() {
     }
 }
 
-try {
-    module.exports = function(EightyAppBase) {
-        EightyApp.prototype = new EightyAppBase();
-        return new EightyApp();
-    }
-} catch(e) {
+module.exports = function(EightyAppBase) {
     EightyApp.prototype = new EightyAppBase();
+    return new EightyApp();
 }
