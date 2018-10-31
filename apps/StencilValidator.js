@@ -1,5 +1,5 @@
 var EightyApp = function() {
-  	// processDocument returns scraped data
+    // processDocument returns scraped data
     this.processDocument = function(html, url, headers, status, cheerio) {
         var $ = cheerio;
         var app = this;
@@ -11,10 +11,22 @@ var EightyApp = function() {
         $html.find('[data-stencil-stylesheet]').each(function(i, obj){
             stencil = true;
         })
+        var bigcommerce = false;
+        if (!stencil) {
+            $html.find('link').each(function(i, obj){
+                var href = $(this).attr('href');
+                if (href.indexOf('bigcommerce.com') > 0) {
+                    bigcommerce = true;
+                }
+            })
+        } else {
+            bigcommerce = true;
+        }
         
         object.url = url;
         object.title = title;
         object.stencil = stencil;
+        object.bigcommerce = bigcommerce;
 
         return JSON.stringify(object);
     }
